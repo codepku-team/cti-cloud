@@ -30,7 +30,7 @@ class CtiCloud extends Container
         $this->setConfig($configObject);
 
 
-        if ($this->config['debug'] ?? false) {
+        if ($this->config->get('debug') ?? false) {
             error_reporting(E_ALL);
         }
 
@@ -50,7 +50,7 @@ class CtiCloud extends Container
 
     public function getConfig($key = null)
     {
-        return $key ? $this->config[$key] : $this->config;
+        return $this->config->get($key);
     }
 
 

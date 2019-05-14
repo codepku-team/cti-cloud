@@ -8,6 +8,8 @@
 
 namespace Junm\CtiCloud\Application;
 
+use Junm\CtiCloud\CtiCloud;
+use Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
 
 class Api extends AbstractAPI
@@ -17,10 +19,14 @@ class Api extends AbstractAPI
      */
     protected $baseUri; //todo
 
+    /**
+     * @var Container
+     */
+    protected $app;
 
-    public function __construct()
+    public function __construct(CtiCloud $app)
     {
-
+        $this->app = $app;
     }
 
 
@@ -38,14 +44,55 @@ class Api extends AbstractAPI
 
         $params = array_merge($params[1], [
             'charset' => 'UTF-8',
-            'timestamp' => time(),
-        ]);
-
-        //todo add sign to $params about api auth
+        ], $this->basicParams());
 
         /** @var ResponseInterface $response */
         $response = call_user_func_array([$http, $method], [$url, $params, $files]);
 
         return json_decode(strval($response->getBody()), true);
+    }
+
+
+    protected function validateByDepartment() :bool
+    {
+        return $this->app->getConfig('validate_type') === 1;
+    }
+
+    protected function validateByEnterprise() :bool
+    {
+        return $this->app->getConfig('validate_type') === 2;
+    }
+
+    protected function getValidateNo()
+    {
+        if ($this->validateByDepartment()) {
+          return  ['departmentId' => $this->app->getConfig('department_id')];
+        }
+        return ['enterpriseId' => $this->app->getConfig('enterprise_id')];
+    }
+    /**
+     * @return string
+     * 获取签名
+     */
+    public function getSign()
+    {
+        $timestamp = time();
+        $token = $this->app->getConfig('department_token');
+
+
+        return md5($id . $timestamp . $token);
+    }
+
+    /**
+     * @return array
+     * 获取基础参数
+     */
+    protected function basicParams()
+    {
+        return [
+            'validateType' => (int) $this->app->getConfig('validate_type'),
+            'timestamp' => time(),
+            'sign' => $this->getSign(),
+        ] + $this->getValidateNo();
     }
 }

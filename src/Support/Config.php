@@ -34,7 +34,7 @@ class Config implements ArrayAccess
      * @param null $default
      * @return array|mixed|null
      */
-    public function get($key, $default = null)
+    public function get($key = null, $default = null)
     {
         $config = $this->config;
 
@@ -46,13 +46,16 @@ class Config implements ArrayAccess
             return $default;
         }
 
-        foreach (explode('.', $key) as $segment) {
-            if (!is_array($config) || !array_key_exists($segment, $config)) {
-                return $default;
-            }
+        if (is_string($key)) {
+            foreach (explode('.', $key) as $segment) {
+                if (!is_array($config) || !array_key_exists($segment, $config)) {
+                    return $default;
+                }
 
-            $config = $config[$segment];
+                $config = $config[$segment];
+            }
         }
+
 
         return $config;
     }
