@@ -9,6 +9,7 @@
 namespace Codepku\CtiCloud\Application;
 
 use Codepku\CtiCloud\CtiCloud;
+use Codepku\CtiCloud\Support\Log;
 use Codepku\CtiCloud\Traits\HasHttpRequest;
 use Pimple\Container;
 
@@ -60,10 +61,13 @@ class Api
     {
         $params = array_merge($params, $this->basicParams());
 
-        return $this->request('post', $endpoint, [
+        $response =  $this->request('post', $endpoint, [
             'headers' => $headers,
             'form_params' => $params,
         ]);
+
+
+        return $response;
     }
 
     /**
@@ -99,7 +103,12 @@ class Api
     {
         $endpoint = $this->spliceUrl($endpoint);
 
-        return $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
+        Log::debug('CtiCloud Request:', compact('endpoint', 'method', 'options'));
+
+        $response = $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
+
+        Log::debug('CtiCloud response', $response);
+        return $response;
     }
 
     /**

@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CtiCloud extends Container
 {
+    /**
+     * @var Config
+     */
     protected $config;
 
     protected $providers = [
@@ -78,18 +81,18 @@ class CtiCloud extends Container
             return;
         }
 
-        $logger = new Logger($this->getConfig()['log']['name'] ?? 'foundation');
+        $logger = new Logger($this->getConfig('log.name') ?? 'cti-cloud');
 
-        if (!$this->getConfig()['debug'] ?? false || defined('PHPUNIT_RUNNING')) {
+        if (!$this->getConfig('debug') ?? false || defined('PHPUNIT_RUNNING')) {
             $logger->pushHandler(new NullHandler());
-        } elseif (($this->getConfig()['log']['handler'] ?? null) instanceof HandlerInterface) {
-            $logger->pushHandler($this->getConfig()['log']['handler']);
-        } elseif ($logFile = $this->getConfig()['log']['file'] ?? null) {
+        } elseif (($this->getConfig('log.handler') ?? null) instanceof HandlerInterface) {
+            $logger->pushHandler($this->getConfig('log.handler'));
+        } elseif ($logFile = $this->getConfig('log.file') ?? null) {
             $logger->pushHandler(new StreamHandler(
                 $logFile,
-                $this->getConfig()['log']['level'] ?? Logger::WARNING,
+                $this->getConfig('log.level') ?? Logger::WARNING,
                 true,
-                $this->getConfig()['log']['permission'] ?? null
+                $this->getConfig('log.permission') ?? null
             ));
         }
 
