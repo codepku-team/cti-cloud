@@ -6,10 +6,10 @@
  * Time: 13:01
  */
 
-namespace Junm\CtiCloud\Application\Staff;
+namespace Codepku\CtiCloud\Application\Staff;
 
 
-use Junm\CtiCloud\Application\Api;
+use Codepku\CtiCloud\Application\Api;
 
 class Staff extends Api
 {

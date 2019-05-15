@@ -6,11 +6,11 @@
  * Time: 12:58
  */
 
-namespace Junm\CtiCloud\Support;
+namespace Codepku\CtiCloud\Support;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
-use Junm\CtiCloud\Exception\HttpException;
+use Codepku\CtiCloud\Exception\HttpException;
 use Psr\Http\Message\ResponseInterface;
 
 /**

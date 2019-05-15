@@ -6,7 +6,7 @@
  * Time: 12:47
  */
 
-namespace Junm\CtiCloud\Support;
+namespace Codepku\CtiCloud\Support;
 
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\NullHandler;

@@ -6,10 +6,10 @@
  * Time: 13:09
  */
 
-namespace Junm\CtiCloud\Application;
+namespace Codepku\CtiCloud\Application;
 
-use Junm\CtiCloud\CtiCloud;
-use Junm\CtiCloud\Traits\HasHttpRequest;
+use Codepku\CtiCloud\CtiCloud;
+use Codepku\CtiCloud\Traits\HasHttpRequest;
 use Pimple\Container;
 
 class Api

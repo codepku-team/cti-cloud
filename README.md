@@ -6,7 +6,7 @@
 ## Installing
 
 ```shell
-$ composer require junm/cti-cloud -vvv
+$ composer require codepku/cti-cloud -vvv
 ```
 
 ## Usage

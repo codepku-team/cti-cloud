@@ -1,9 +1,9 @@
 <?php
 
-namespace Junm\CtiCloud;
+namespace Codepku\CtiCloud;
 
-use Junm\CtiCloud\Support\Config;
-use Junm\CtiCloud\Support\Log;
+use Codepku\CtiCloud\Support\Config;
+use Codepku\CtiCloud\Support\Log;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;

@@ -6,7 +6,7 @@
  * Time: 13:00
  */
 
-namespace Junm\CtiCloud\Application\Staff;
+namespace Codepku\CtiCloud\Application\Staff;
 
 
 use Pimple\Container;

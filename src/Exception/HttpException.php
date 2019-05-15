@@ -6,7 +6,7 @@
  * Time: 12:58
  */
 
-namespace Junm\CtiCloud\Exception;
+namespace Codepku\CtiCloud\Exception;
 
 
 class HttpException extends \Exception

@@ -6,7 +6,7 @@
  * Time: 13:00
  */
 
-namespace Junm\CtiCloud\Application\Seat;
+namespace Codepku\CtiCloud\Application\Seat;
 
 
 use Pimple\Container;
@@ -16,7 +16,7 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $app)
     {
-        $app['staff'] = function ($app) {
+        $app['seat'] = function ($app) {
             return new Seat($app);
         };
     }

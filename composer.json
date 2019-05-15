@@ -1,5 +1,5 @@
 {
-    "name": "junm/cti-cloud",
+    "name": "codepku/cti-cloud",
     "description": "CtiCloud Api Service",
     "license": "MIT",
     "authors": [
@@ -12,12 +12,12 @@
         "pimple/pimple": "^3.0",
         "guzzlehttp/guzzle": "^6.3",
         "monolog/monolog": "^1.24",
-        "symfony/http-foundation": "^4.2",
+        "symfony/http-foundation": "^3.3|^4.2",
         "doctrine/cache": "^1.8"
     },
     "autoload": {
         "psr-4": {
-            "Junm\\CtiCloud\\": "src"
+            "Codepku\\CtiCloud\\": "src"
         }
     }
 }

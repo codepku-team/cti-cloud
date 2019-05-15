@@ -6,10 +6,10 @@
  * Time: 13:17
  */
 
-namespace Junm\CtiCloud\Application\Seat;
+namespace Codepku\CtiCloud\Application\Seat;
 
 
-use Junm\CtiCloud\Application\Api;
+use Codepku\CtiCloud\Application\Api;
 
 class Seat extends Api
 {
