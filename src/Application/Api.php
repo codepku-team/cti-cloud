@@ -9,16 +9,14 @@
 namespace Junm\CtiCloud\Application;
 
 use Junm\CtiCloud\CtiCloud;
+use Junm\CtiCloud\Traits\HasHttpRequest;
 use Pimple\Container;
-use Psr\Http\Message\ResponseInterface;
 
-class Api extends AbstractAPI
+class Api
 {
-    /**
-     * @var string
-     */
-    protected $baseUri; //todo
+    use HasHttpRequest;
 
+    const BASE_URI = "https://api-%s.cticloud.cn/interface/%s";
     /**
      * @var Container
      */
@@ -31,38 +29,117 @@ class Api extends AbstractAPI
 
 
     /**
-     * @param $method
-     * @param $params
-     * @param array $files
+     * Make a get request.
+     *
+     * @param string $endpoint
+     * @param array  $query
+     * @param array  $headers
+     *
      * @return array
      */
-    public function request($method, $params, $files = [])
+    protected function get($endpoint, $query = [], $headers = [])
     {
-        $http = $this->getHttp();
+        $query = array_merge($query, $this->basicParams());
 
-        $url = $params[0];
+        return $this->request('get', $endpoint, [
+            'headers' => $headers,
+            'query' => $query,
+        ]);
+    }
 
-        $params = array_merge($params[1], [
-            'charset' => 'UTF-8',
-        ], $this->basicParams());
+    /**
+     * Make a post request.
+     *
+     * @param string $endpoint
+     * @param array  $params
+     * @param array  $headers
+     *
+     * @return array
+     */
+    protected function post($endpoint, $params = [], $headers = [])
+    {
+        $params = array_merge($params, $this->basicParams());
 
-        /** @var ResponseInterface $response */
-        $response = call_user_func_array([$http, $method], [$url, $params, $files]);
+        return $this->request('post', $endpoint, [
+            'headers' => $headers,
+            'form_params' => $params,
+        ]);
+    }
 
-        return json_decode(strval($response->getBody()), true);
+    /**
+     * Make a post request with json params.
+     *
+     * @param       $endpoint
+     * @param array $params
+     * @param array $headers
+     *
+     * @return array
+     */
+    protected function postJson($endpoint, $params = [], $headers = [])
+    {
+        $params = array_merge($params, $this->basicParams());
+
+        return $this->request('post', $endpoint, [
+            'headers' => $headers,
+            'json' => $params,
+        ]);
     }
 
 
+    /**
+     * Make a http request.
+     *
+     * @param string $method
+     * @param string $endpoint
+     * @param array  $options  http://docs.guzzlephp.org/en/latest/request-options.html
+     *
+     * @return array
+     */
+    protected function request($method, $endpoint, $options = [])
+    {
+        $endpoint = $this->spliceUrl($endpoint);
+
+        return $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
+    }
+
+    /**
+     * @param $endPoint
+     * @return string
+     * 拼接完整的url
+     */
+    protected function spliceUrl($endPoint)
+    {
+        $region = (string) $this->app->getConfig('region');
+
+        $apiVersion = (string) $this->app->getConfig('version');
+
+        $baseUri = sprintf(self::BASE_URI, $region, $apiVersion);
+
+        return $baseUri . $endPoint;
+    }
+
+    /**
+     * @return bool
+     * 是否通过部门编号鉴权
+     */
     protected function validateByDepartment() :bool
     {
         return $this->app->getConfig('validate_type') === 1;
     }
 
+    /**
+     * @return bool
+     * 是否通过呼叫中心编号鉴权
+     */
     protected function validateByEnterprise() :bool
     {
         return $this->app->getConfig('validate_type') === 2;
     }
 
+    /**
+     * @return array
+     * 获取鉴权编号键值对
+     */
     protected function getValidateNo()
     {
         if ($this->validateByDepartment()) {
@@ -70,6 +147,7 @@ class Api extends AbstractAPI
         }
         return ['enterpriseId' => $this->app->getConfig('enterprise_id')];
     }
+
     /**
      * @return string
      * 获取签名
@@ -79,8 +157,10 @@ class Api extends AbstractAPI
         $timestamp = time();
         $token = $this->app->getConfig('department_token');
 
+        $validateNo = $this->getValidateNo();
+        $validateNo = array_pop($validateNo);
 
-        return md5($id . $timestamp . $token);
+        return md5($validateNo . $timestamp . $token);
     }
 
     /**
