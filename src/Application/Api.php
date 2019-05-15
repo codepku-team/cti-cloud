@@ -101,7 +101,7 @@ class Api
      */
     protected function request($method, $endpoint, $options = [])
     {
-        $endpoint = $this->spliceUrl($endpoint);
+//        $endpoint = $this->spliceUrl($endpoint);
 
         Log::debug('CtiCloud Request:', compact('endpoint', 'method', 'options'));
 
@@ -111,12 +111,7 @@ class Api
         return $response;
     }
 
-    /**
-     * @param $endPoint
-     * @return string
-     * 拼接完整的url
-     */
-    protected function spliceUrl($endPoint)
+    public function getBaseUri()
     {
         $region = (string) $this->app->getConfig('region');
 
@@ -124,7 +119,22 @@ class Api
 
         $baseUri = sprintf(self::BASE_URI, $region, $apiVersion);
 
-        return $baseUri . $endPoint;
+        return $baseUri;
+    }
+    /**
+     * @param $endPoint
+     * @return string
+     * 拼接完整的url
+     */
+    protected function spliceUrl($endPoint)
+    {
+//        $region = (string) $this->app->getConfig('region');
+//
+//        $apiVersion = (string) $this->app->getConfig('version');
+//
+//        $baseUri = sprintf(self::BASE_URI, $region, $apiVersion);
+//
+//        return $baseUri . $endPoint;
     }
 
     /**

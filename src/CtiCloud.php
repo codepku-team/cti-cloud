@@ -9,7 +9,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pimple\Container;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 
 class CtiCloud extends Container
 {
@@ -67,9 +67,9 @@ class CtiCloud extends Container
 
     private function registerBase()
     {
-        $this['request'] = function () {
-            return Request::createFromGlobals();
-        };
+//        $this['request'] = function () {
+//            return Request::createFromGlobals();
+//        };
         //todo more ?
 
     }
