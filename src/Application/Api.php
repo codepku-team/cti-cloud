@@ -12,12 +12,15 @@ use Codepku\CtiCloud\CtiCloud;
 use Codepku\CtiCloud\Support\Log;
 use Codepku\CtiCloud\Traits\HasHttpRequest;
 use Pimple\Container;
+use Psr\Http\Message\ResponseInterface;
 
 class Api
 {
     use HasHttpRequest;
 
-    const BASE_URI = "https://api-%s.cticloud.cn/interface/%s";
+    const BASE_URI = "https://api-%s.cticloud.cn/";
+
+    const BASE_TEST_URI = "https://api-test-%s.cticloud.cn/";
     /**
      * @var Container
      */
@@ -101,13 +104,18 @@ class Api
      */
     protected function request($method, $endpoint, $options = [])
     {
-//        $endpoint = $this->spliceUrl($endpoint);
+        $endpoint = $this->splicePath($endpoint);
 
         Log::debug('CtiCloud Request:', compact('endpoint', 'method', 'options'));
 
         $response = $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
 
-        Log::debug('CtiCloud response', $response);
+        if (is_array($response)) {
+            Log::debug('CtiCloud response', $response);
+        } elseif (is_string($response)) {
+            Log::debug("CtiCloud response: $response");
+        }
+
         return $response;
     }
 
@@ -115,26 +123,29 @@ class Api
     {
         $region = (string) $this->app->getConfig('region');
 
-        $apiVersion = (string) $this->app->getConfig('version');
+        if ($this->app->getConfig('env') == 'production') {
+            $baseUri = sprintf(self::BASE_URI, $region);
+        } else {
+            $baseUri = sprintf(self::BASE_TEST_URI, $region);
+        }
 
-        $baseUri = sprintf(self::BASE_URI, $region, $apiVersion);
 
         return $baseUri;
     }
     /**
      * @param $endPoint
      * @return string
-     * 拼接完整的url
+     * 拼接完整的path
      */
-    protected function spliceUrl($endPoint)
+    protected function splicePath($endPoint)
     {
-//        $region = (string) $this->app->getConfig('region');
-//
-//        $apiVersion = (string) $this->app->getConfig('version');
-//
-//        $baseUri = sprintf(self::BASE_URI, $region, $apiVersion);
-//
-//        return $baseUri . $endPoint;
+        $apiVersion = (string) $this->app->getConfig('version');
+
+        $pathPrefix = sprintf("interface/%s", $apiVersion);
+
+        $endPoint = $pathPrefix . $endPoint;
+
+        return $endPoint;
     }
 
     /**
@@ -193,5 +204,28 @@ class Api
             'timestamp' => time(),
             'sign' => $this->getSign(),
         ] + $this->getValidateNo();
+    }
+
+    /**
+     * Convert response contents to json.
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return ResponseInterface|array|string
+     */
+    protected function unwrapResponse(ResponseInterface $response)
+    {
+        $contentType = $response->getHeaderLine('Content-Type');
+        $contents = $response->getBody()->getContents();
+
+
+        if (false !== stripos($contentType, 'json') || stripos($contentType, 'javascript')
+            || stripos($contentType, 'html')) {
+            return json_decode($contents, true);
+        } elseif (false !== stripos($contentType, 'xml')) {
+            return json_decode(json_encode(simplexml_load_string($contents)), true);
+        }
+
+        return $contents;
     }
 }

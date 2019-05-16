@@ -81,6 +81,7 @@ trait HasHttpRequest
      */
     protected function request($method, $endpoint, $options = [])
     {
+
         return $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
     }
 
@@ -124,6 +125,7 @@ trait HasHttpRequest
     {
         $contentType = $response->getHeaderLine('Content-Type');
         $contents = $response->getBody()->getContents();
+
 
         if (false !== stripos($contentType, 'json') || stripos($contentType, 'javascript')) {
             return json_decode($contents, true);
