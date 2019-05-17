@@ -21,7 +21,9 @@ class CtiCloud extends Container
     protected $providers = [
         //todo required providers
         Application\Staff\ServiceProvider::class,
-        Application\Seat\ServiceProvider::class
+        Application\Seat\ServiceProvider::class,
+        Application\Telephone\ServiceProvider::class,
+        Application\Record\ServiceProvider::class,
     ];
 
     public function __construct(array $config)
