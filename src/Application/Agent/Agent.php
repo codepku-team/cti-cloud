@@ -33,8 +33,16 @@ class Agent extends Api
      * ${name2}	String	可选	动态参数2	参数值必须使用utf-8编码进行urlencode参数值不能含有逗号’,’，如果有会被转换为中文逗号’，’
      * ...
      * */
-    public function axbWebcall($params)
+    public function axbWebcall(string $mobile, array $params = [])
     {
-        return $this->post($params);
+        return $this->post('/axbWebcall', array_merge(['tel' => $mobile], $params));
+    }
+
+
+    public function previewOutcall($cno, $mobile, array $params = [])
+    {
+        $params = array_merge(['cno' => $cno, 'tel' => $mobile], $params);
+
+        return $this->post('/previewOutcall', $params);
     }
 }

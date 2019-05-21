@@ -24,6 +24,7 @@ class CtiCloud extends Container
         Application\Seat\ServiceProvider::class,
         Application\Telephone\ServiceProvider::class,
         Application\Record\ServiceProvider::class,
+        Application\Agent\ServiceProvider::class
     ];
 
     public function __construct(array $config)
