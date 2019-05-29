@@ -46,4 +46,18 @@ class Seat extends Api
     {
         return $this->post('/agent/update', array_merge(['cno' => $cno], $params));
     }
+
+    /**
+     * @param $cno
+     * @return array
+     * @throws HttpException
+     *
+     * 获取坐席详情
+     */
+    public function detail($cno)
+    {
+        return $this->get('/agent/get', [
+            'cno' => $cno
+        ]);
+    }
 }
