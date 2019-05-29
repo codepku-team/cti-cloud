@@ -10,12 +10,14 @@ namespace Codepku\CtiCloud\Application\Seat;
 
 
 use Codepku\CtiCloud\Application\Api;
+use Codepku\CtiCloud\Exception\HttpException;
 
 class Seat extends Api
 {
     /**
      * @param $params array
      * @return array
+     * @throws HttpException
      * 新增坐席
      */
     public function add(array $params)
@@ -26,6 +28,7 @@ class Seat extends Api
     /**
      * @param $cno  int 座席工号
      * @return array
+     * @throws HttpException
      * 删除坐席
      */
     public function delete(int $cno)
@@ -37,11 +40,10 @@ class Seat extends Api
      * @param int $cno
      * @param array $params
      * @return array
+     * @throws HttpException
      */
     public function update(int $cno, array $params = [])
     {
         return $this->post('/agent/update', array_merge(['cno' => $cno], $params));
     }
-
-
 }

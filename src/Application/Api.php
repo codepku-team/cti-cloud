@@ -9,6 +9,7 @@
 namespace Codepku\CtiCloud\Application;
 
 use Codepku\CtiCloud\CtiCloud;
+use Codepku\CtiCloud\Exception\HttpException;
 use Codepku\CtiCloud\Support\Log;
 use Codepku\CtiCloud\Traits\HasHttpRequest;
 use Pimple\Container;
@@ -38,7 +39,7 @@ class Api
      * @param string $endpoint
      * @param array  $query
      * @param array  $headers
-     *
+     ** @throws HttpException
      * @return array
      */
     protected function get($endpoint, $query = [], $headers = [])
@@ -57,7 +58,7 @@ class Api
      * @param string $endpoint
      * @param array  $params
      * @param array  $headers
-     *
+     ** @throws HttpException
      * @return array
      */
     protected function post($endpoint, $params = [], $headers = [])
@@ -80,6 +81,7 @@ class Api
      * @param array $params
      * @param array $headers
      *
+     * @throws HttpException
      * @return array
      */
     protected function postJson($endpoint, $params = [], $headers = [])
@@ -99,7 +101,7 @@ class Api
      * @param string $method
      * @param string $endpoint
      * @param array  $options  http://docs.guzzlephp.org/en/latest/request-options.html
-     *
+     * @throws HttpException
      * @return array
      */
     protected function request($method, $endpoint, $options = [])
@@ -114,6 +116,15 @@ class Api
             Log::debug('CtiCloud response', $response);
         } elseif (is_string($response)) {
             Log::debug("CtiCloud response: $response");
+        }
+
+        if (isset($response['result']) and (int) $response['result'] === -1) {
+            if (isset($response['errorCode']) and !empty($errMsg = $this->errCodeMap($response['errorCode']))) {
+                throw new HttpException($errMsg);
+            } else {
+                $errMsg = $response['description'] ?? '请求天润融通API出错';
+                throw new HttpException($errMsg);
+            }
         }
 
         return $response;
@@ -227,5 +238,18 @@ class Api
         }
 
         return $contents;
+    }
+
+    /**
+     * @param $errCode
+     * @return null
+     * 获取错误码对应的中文解释
+     */
+    protected function errCodeMap($errCode)
+    {
+        $errCodeMap = $this->app->getConfig('err_code');
+
+        $errCode = (int) $errCode;
+        return $errCodeMap[$errCode] ?? null;
     }
 }

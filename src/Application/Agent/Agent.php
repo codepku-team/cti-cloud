@@ -9,6 +9,7 @@
 namespace Codepku\CtiCloud\Application\Agent;
 
 use Codepku\CtiCloud\Application\Api;
+use Codepku\CtiCloud\Exception\HttpException;
 
 class Agent extends Api
 {
@@ -32,6 +33,11 @@ class Agent extends Api
      * ${name1}	String	可选	动态参数1	参数值必须使用utf-8编码进行urlencode参数值不能含有逗号’,’，如果有会被转换为中文逗号’，’
      * ${name2}	String	可选	动态参数2	参数值必须使用utf-8编码进行urlencode参数值不能含有逗号’,’，如果有会被转换为中文逗号’，’
      * ...
+     *
+     * @param $mobile
+     * @param $params
+     * @return array
+     * @throws HttpException
      * */
     public function axbWebcall(string $mobile, array $params = [])
     {
@@ -39,10 +45,52 @@ class Agent extends Api
     }
 
 
+    /**
+     * @param $cno
+     * @param $mobile
+     * @param array $params
+     * @return array
+     * @throws HttpException
+     */
     public function previewOutcall($cno, $mobile, array $params = [])
     {
         $params = array_merge(['cno' => $cno, 'tel' => $mobile], $params);
 
         return $this->post('/previewOutcall', $params);
+    }
+
+
+    /**
+     * @param $cno
+     * @param $bindTel
+     * @param $bindType
+     * @param $isVerify
+     * @return array
+     * @throws  HttpException
+     */
+    public function changeBindTel($cno, $bindTel, $bindType, $isVerify = 0)
+    {
+        return $this->post('/agent/changeBindTel', [
+            'cno' => $cno,
+            'bindTel' => $bindTel,
+            'bindType' => $bindType,
+            'isVerify' => $isVerify
+        ]);
+    }
+
+    /**
+     * @param $cno
+     * @param $bindTel 绑定电话
+     * @param $bindType 取值 1.普通电话,2.分机
+     * @return array
+     * @throws HttpException
+     */
+    public function login($cno, $bindTel, $bindType)
+    {
+        return $this->post('/agent/login', [
+            'cno' => $cno,
+            'bindTel' => $bindTel,
+            'bindType' => $bindType
+        ]);
     }
 }
