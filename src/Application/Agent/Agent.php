@@ -93,4 +93,54 @@ class Agent extends Api
             'bindType' => $bindType
         ]);
     }
+
+    /**
+     * 坐席下线
+     * @param $cno
+     * @param int $removeBinging
+     * @param int $isKickout
+     * @param int $ignoreOffline
+     * @return array
+     * @throws HttpException
+     */
+    public function logout($cno, $removeBinging = 0, $isKickout = 0, $ignoreOffline = 0)
+    {
+        return $this->post('/agent/logout', [
+            'cno' => $cno,
+            'removeBinding' => $removeBinging,
+            'isKickout' => $isKickout,
+            'ignoreOffline' => $ignoreOffline
+        ]);
+    }
+
+    /**
+     * 坐席置闲
+     * @param $cno
+     * @return array
+     * @throws HttpException
+     */
+    public function unpause($cno)
+    {
+        return $this->post('/agent/unpause', ['cno' => $cno]);
+    }
+
+    /**
+     * 坐席置忙
+     * @param $cno
+     * @param $type
+     * @param $description
+     * @return array
+     * @throws HttpException
+     *
+     * type 取值说明：1 普通 2 休息 3 IM
+     * description 置忙描述
+     */
+    public function pause($cno, $type, $description)
+    {
+        return $this->post('/agent/pause', [
+            'cno' => $cno,
+            'type' => $type,
+            'description' => $description
+        ]);
+    }
 }

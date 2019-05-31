@@ -120,9 +120,10 @@ class Api
 
         if (isset($response['result']) and (int) $response['result'] === -1) {
             if (isset($response['errorCode']) and !empty($errMsg = $this->errCodeMap($response['errorCode']))) {
-                throw new HttpException($errMsg);
+                throw new HttpException('请求天润融通API出错：'. $errMsg);
             } else {
-                $errMsg = $response['description'] ?? '请求天润融通API出错';
+                $errMsg = "请求天润融通API出错：";
+                $errMsg .= $response['description'] ?? '';
                 throw new HttpException($errMsg);
             }
         }
