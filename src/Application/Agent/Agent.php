@@ -52,7 +52,7 @@ class Agent extends Api
      * @return array
      * @throws HttpException
      */
-    public function previewOutcall($cno, $mobile, array $params = [])
+    public function previewOutcall($cno, $mobile, array $params = []): array
     {
         $params = array_merge(['cno' => $cno, 'tel' => $mobile], $params);
 
@@ -141,6 +141,20 @@ class Agent extends Api
             'cno' => $cno,
             'type' => $type,
             'description' => $description
+
+    }
+
+    
+    /**
+     * 取消座席外呼
+     * @param string $cno  座席号
+     * @return array
+     * @throws HttpException
+     */
+    public function previewOutcallCancel($cno): array
+    {
+        return $this->post('/previewOutcallCancel', [
+            'cno' => $cno,
         ]);
     }
 }
