@@ -141,10 +141,10 @@ class Agent extends Api
             'cno' => $cno,
             'type' => $type,
             'description' => $description
-
+        ]);
     }
 
-    
+
     /**
      * 取消座席外呼
      * @param string $cno  座席号
