@@ -103,7 +103,7 @@ class Agent extends Api
      * @return array
      * @throws HttpException
      */
-    public function logout($cno, $removeBinging = 0, $isKickout = 0, $ignoreOffline = 0)
+    public function logout($cno, $removeBinging = 0, $isKickout = 0, $ignoreOffline = 1)
     {
         return $this->post('/agent/logout', [
             'cno' => $cno,
