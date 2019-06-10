@@ -108,14 +108,15 @@ class Api
     {
         $endpoint = $this->splicePath($endpoint);
 
-        Log::debug('CtiCloud Request:', compact('endpoint', 'method', 'options'));
+        $baseUri = $this->getBaseUri();
+        Log::debug('CtiCloud Request:', compact('baseUri','endpoint', 'method', 'options'));
 
         $response = $this->unwrapResponse($this->getHttpClient($this->getBaseOptions())->{$method}($endpoint, $options));
 
         if (is_array($response)) {
             Log::debug('CtiCloud response', $response);
-        } elseif (is_string($response)) {
-            Log::debug("CtiCloud response: $response");
+        } else {
+            Log::debug("CtiCloud response:". (string)$response);
         }
 
         if (isset($response['result']) and (int) $response['result'] === -1) {
@@ -229,7 +230,6 @@ class Api
     {
         $contentType = $response->getHeaderLine('Content-Type');
         $contents = $response->getBody()->getContents();
-
 
         if (false !== stripos($contentType, 'json') || stripos($contentType, 'javascript')
             || stripos($contentType, 'html')) {

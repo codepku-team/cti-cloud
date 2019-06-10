@@ -157,4 +157,16 @@ class Agent extends Api
             'cno' => $cno,
         ]);
     }
+
+
+    /**
+     * @param $cno
+     * @return array
+     * @throws HttpException
+     * agent 工具条登录权限认证
+     */
+    public function authenticate($cno)
+    {
+        return $this->get('/agentLogin/authenticate', ['cno' => $cno]);
+    }
 }
