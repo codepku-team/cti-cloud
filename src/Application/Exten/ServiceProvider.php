@@ -1,11 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: wl
- * Date: 2019/5/16
- * Time: 17:39
+ * User: junm
+ * Date: 2019/6/13
+ * Time: 12:00
  */
-namespace Codepku\CtiCloud\Application\Agent;
+
+namespace Codepku\CtiCloud\Application\Exten;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -14,7 +15,7 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $app)
     {
-        $app['agent'] = function ($app) {
+        $app['exten'] = function ($app) {
             return new Exten($app);
         };
     }
