@@ -60,4 +60,18 @@ class Seat extends Api
             'cno' => $cno
         ]);
     }
+
+    /**
+     * @param string $cno 座席号
+     * @param string $pwd md5加密密钥
+     * @return array
+     * @throws HttpException
+     */
+    public function authenticate($cno, $pwd = '')
+    {
+        return $this->post('/agentLogin/authenticate', [
+            'cno' => $cno,
+            'pwd' => $pwd
+        ]);
+    }
 }
