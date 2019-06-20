@@ -45,7 +45,7 @@ class Record extends Api
      */
     public function obDetail($callId)
     {
-        return $this->post('/cdr/ob/get', [
+        return $this->post('/cdr/ob/query', [
             'uniqueId' => $callId
         ]);
     }
@@ -58,7 +58,7 @@ class Record extends Api
      */
     public function predictiveCallDetail($callId)
     {
-        return $this->post('/cdr/predictiveCall/get', [
+        return $this->post('/cdr/predictiveCall/query', [
             'uniqueId' => $callId
         ]);
     }
@@ -71,7 +71,7 @@ class Record extends Api
      */
     public function ibDetail($callId)
     {
-        return $this->post('/cdr/ib/get', [
+        return $this->post('/cdr/ib/query', [
             'uniqueId' => $callId
         ]);
     }
@@ -84,7 +84,7 @@ class Record extends Api
      */
     public function webCallDeatil($callId)
     {
-        return $this->post('/cdr/webcall/get', [
+        return $this->post('/cdr/webcall/query', [
             'uniqueId' => $callId
         ]);
     }
