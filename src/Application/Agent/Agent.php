@@ -59,6 +59,20 @@ class Agent extends Api
         return $this->post('/previewOutcall', $params);
     }
 
+    /**
+     * axb外呼
+     * @param $cno
+     * @param $mobile
+     * @param array $params
+     * @return array
+     * @throws HttpException
+     */
+    public function axbOutcall($cno, $mobile, array $params = []) : array
+    {
+        $params = array_merge(['cno' => $cno, 'tel' => $mobile], $params);
+
+        return $this->post('/axbOutcall', $params);
+    }
 
     /**
      * @param $cno
