@@ -9,6 +9,7 @@
 namespace Codepku\CtiCloud\Application\Record;
 
 use Codepku\CtiCloud\Application\Api;
+use Codepku\CtiCloud\Exception\HttpException;
 
 class Record extends Api
 {
@@ -34,5 +35,57 @@ class Record extends Api
     public function getUrl($params)
     {
         return $this->get('/record/getUrl', $params);
+    }
+
+    /**
+     * 获取座席外呼通话记录详情
+     * @param $callId
+     * @return array
+     * @throws HttpException
+     */
+    public function obDetail($callId)
+    {
+        return $this->post('/cdr/ob/query', [
+            'uniqueId' => $callId
+        ]);
+    }
+
+    /**
+     * 获取预测外呼式外呼通话记录详情
+     * @param $callId
+     * @return array
+     * @throws HttpException
+     */
+    public function predictiveCallDetail($callId)
+    {
+        return $this->post('/cdr/predictiveCall/query', [
+            'uniqueId' => $callId
+        ]);
+    }
+
+    /**
+     * 获取来电通话记录详情
+     * @param $callId
+     * @return array
+     * @throws HttpException
+     */
+    public function ibDetail($callId)
+    {
+        return $this->post('/cdr/ib/query', [
+            'uniqueId' => $callId
+        ]);
+    }
+
+    /**
+     * 获取WebCall通话记录详情
+     * @param $callId
+     * @return array
+     * @throws HttpException
+     */
+    public function webCallDeatil($callId)
+    {
+        return $this->post('/cdr/webcall/query', [
+            'uniqueId' => $callId
+        ]);
     }
 }
