@@ -200,7 +200,7 @@ class Push extends Api
 
         $realParams['url'] = $url;
         $realParams['type'] = $type;
-        $realParams['name'] = self::PUSH_ACTION[$type] ?? null;
+        $realParams['name'] = $params['name'] ?? self::PUSH_ACTION[$type] ?? null;
 
         return $this->post('/enterprisePushAction/create', $realParams);
     }
@@ -328,6 +328,7 @@ class Push extends Api
         }
 
         $realParams['id'] = $id;
+        $realParams['name'] = $params['name'] ?? self::PUSH_ACTION[$type] ?? null;
         return $this->post('/enterprisePushAction/update', $realParams);
     }
 
