@@ -64,6 +64,28 @@ $config = [
 
     //座席上线
     $application->agent->login('100001', '13800000000', 1);
+    
+    const PUSH_ACTION = [
+        1 => '来电推送',
+        2 => '来电响铃推送',
+        3 => '外呼响铃推送',
+        4 => 'webcall座席响铃推送',
+        5 => '来电接通推送',
+        6 => '外呼接通推送',
+        7 => '来电挂机推送',
+        8 => '外呼挂机推送',
+        9 => '座席状态推送',
+        10 => '按键推送',
+        11 => '号码状态识别推送',
+        12 => '录音状态推送',
+        13 => 'ASR语音转换结果推送',
+    ];   
+ 
+    // 添加推送配置
+    $application->push->update('push_setting_id', 'type', ['param' => ['*']]);
+    
+    // 更新推送配置
+    $application->push->create('your-push-url', 'type', ['param' => ['*']]);
 
     //todo more
 ```
@@ -87,15 +109,6 @@ $config = [
 |12|录音状态推送|  
 |13|ASR语音转换结果推送|
 
-### 添加推送设置
-```php
-$application->push->create('your-push-url', 'type', ['param' => '*']);
-```
-
-### 更新推送设置
-```php
-$application->push->update('push_setting_id', 'type', ['param' => '*'])
-```
 
 ## License
 
