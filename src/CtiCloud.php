@@ -2,6 +2,14 @@
 
 namespace Codepku\CtiCloud;
 
+use Codepku\CtiCloud\Application\Agent\Agent;
+use Codepku\CtiCloud\Application\Exten\Exten;
+use Codepku\CtiCloud\Application\Push\Push;
+use Codepku\CtiCloud\Application\Record\Record;
+use Codepku\CtiCloud\Application\Seat\Seat;
+use Codepku\CtiCloud\Application\Skill\Skill;
+use Codepku\CtiCloud\Application\Staff\Staff;
+use Codepku\CtiCloud\Application\Telephone\Telephone;
 use Codepku\CtiCloud\Support\Config;
 use Codepku\CtiCloud\Support\Log;
 use Monolog\Handler\HandlerInterface;
@@ -9,8 +17,19 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pimple\Container;
-//use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class CtiCloud
+ * @package Codepku\CtiCloud
+ * @property Record record
+ * @property Push push
+ * @property Seat seat
+ * @property Agent agent
+ * @property Exten exten
+ * @property Skill skill
+ * @property Staff staff
+ * @property Telephone telephone
+ */
 class CtiCloud extends Container
 {
     /**

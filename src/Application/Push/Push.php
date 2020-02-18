@@ -44,98 +44,98 @@ class Push extends Api
 
     // 响铃推送设置字段(来电响铃、外呼响铃以及WebCall座席响铃可选字段一致
     public const PARAMS_RING = [
-        'event',
-        'enterpriseId',
-        'hotline',
-        'cno',
-        'bindTel',
-        'customerNumber',
-        'customerNumberType',
-        'customerAreaCode',
-        'callType',
-        'numberTrunk',
-        'mainUniqueId',
-        'uniqueId',
-        'qno',
-        'ringingTime',
-        'consulterCno',
-        'transferCno'
+        'event' => 'event',
+        'enterpriseId' => 'enterpriseId',
+        'hotline' => 'hotline',
+        'cno' => 'cno',
+        'bindTel' => 'bindTel',
+        'customerNumber' => 'customerNumber',
+        'customerNumberType' => 'customerNumberType',
+        'customerAreaCode' => 'customerAreaCode',
+        'callType' => 'callType',
+        'numberTrunk' => 'numberTrunk',
+        'mainUniqueId' => 'mainUniqueId',
+        'uniqueId' => 'uniqueId',
+        'qno' => 'qno',
+        'ringingTime' => 'ringingTime',
+        'consulterCno' => 'consulterCno',
+        'transferCno' => 'transferCno'
     ];
 
     // 呼入接通推送设置字段
     public const PARAMS_CALL_IN_CONNECTED = [
-        'event',
-        'enterpriseId',
-        'customerNumber',
-        'cno',
-        'bridgeTime',
-        'mainUniqueId',
-        'calleeNumber',
-        'detailCallType',
-        'callType'
+        'event' => 'event',
+        'enterpriseId' => 'enterpriseId',
+        'customerNumber' => 'customerNumber',
+        'cno' => 'cno',
+        'bridgeTime' => 'bridgeTime',
+        'mainUniqueId' => 'mainUniqueId',
+        'calleeNumber' => 'calleeNumber',
+        'detailCallType' => 'detailCallType',
+        'callType' => 'callType'
     ];
 
     // 呼出接通推送设置字段
     public const PARAMS_CALL_OUT_CONNECTED = [
-        'event',
-        'enterpriseId',
-        'callType',
-        'customerNumber',
-        'customerNumberType',
-        'customerAreaCode',
-        'calleeNumber',
-        'cno',
-        'mainUniqueId',
-        'requestUniqueId'
+        'event' => 'event',
+        'enterpriseId' => 'enterpriseId',
+        'callType' => 'callType',
+        'customerNumber' => 'customerNumber',
+        'customerNumberType' => 'customerNumberType',
+        'customerAreaCode' => 'customerAreaCode',
+        'calleeNumber' => 'calleeNumber',
+        'cno' => 'cno',
+        'mainUniqueId' => 'mainUniqueId',
+        'requestUniqueId' => 'requestUniqueId'
     ];
 
     // 呼入挂断推送设置字段
     public const PARAMS_CALL_IN_HANG = [
-        '${cdr_enterprise_id}',
-        '${cdr_main_unique_id}',
-        '${cdr_customer_number}',
-        '${cdr_customer_area_code}',
-        '${cdr_customer_number_type}',
-        '${cdr_status}',
-        '${cdr_call_type}',
-        '${cdr_number_trunk}',
-        '${cdr_hotline}',
-        '${cdr_callee_cno}',
-        '${cdr_join_queue_time}',
-        '${cdr_bridge_time}',
-        '${cdr_end_time}',
-        '${cdr_start_time}',
-        '${cdr_record_file_1}',
-        '${cdr_end_reason}',
-        '${cdr_queue}',
-        '${cdr_customer_province}',
-        '${cdr_customer_city}'
+        'cdr_enterprise_id' => '${cdr_enterprise_id}',
+        'cdr_main_unique_id' => '${cdr_main_unique_id}',
+        'cdr_customer_number' => '${cdr_customer_number}',
+        'cdr_customer_area_code' => '${cdr_customer_area_code}',
+        'cdr_customer_number_type' => '${cdr_customer_number_type}',
+        'cdr_status' => '${cdr_status}',
+        'cdr_call_type' => '${cdr_call_type}',
+        'cdr_number_trunk' => '${cdr_number_trunk}',
+        'cdr_hotline' => '${cdr_hotline}',
+        'cdr_callee_cno' => '${cdr_callee_cno}',
+        'cdr_join_queue_time' => '${cdr_join_queue_time}',
+        'cdr_bridge_time' => '${cdr_bridge_time}',
+        'cdr_end_time' => '${cdr_end_time}',
+        'cdr_start_time' => '${cdr_start_time}',
+        'cdr_record_file_1' => '${cdr_record_file_1}',
+        'cdr_end_reason' => '${cdr_end_reason}',
+        'cdr_queue' => '${cdr_queue}',
+        'cdr_customer_province' => '${cdr_customer_province}',
+        'cdr_customer_city' => '${cdr_customer_city}'
     ];
 
     // 呼出挂断推送设置字段(默认全部外呼都算，包括:预览外呼、WebCall、预测外呼、主叫外呼以及内部外呼)
     public const PARAMS_CALL_OUT_HANG = [
-        '${cdr_enterprise_id}',
-        '${cdr_main_unique_id}',
-        '${cdr_customer_number}',
-        '${cdr_customer_area_code}',
-        '${cdr_customer_number_type}',
-        '${cdr_status}',
-        '${cdr_call_type}',
-        '${cdr_cno}',
-        '${cdr_start_time}',
-        '${cdr_bridge_time}',
-        '${cdr_answer_time}',
-        '${cdr_end_time}',
-        '${cdr_request_unique_id}',
-        '${cdr_record_file_1}',
-        '${cdr_end_reason}',
-        '${cdr_agent_number}',
-        '${cust_callee_clid}',
-        '${cdr_clid}',
-        '${cdr_queue}',
-        '${cdr_customer_province}',
-        '${cdr_customer_city}',
-        '${cdr_agent_name}'
+        'cdr_enterprise_id' => '${cdr_enterprise_id}',
+        'cdr_main_unique_id' => '${cdr_main_unique_id}',
+        'cdr_customer_number' => '${cdr_customer_number}',
+        'cdr_customer_area_code' => '${cdr_customer_area_code}',
+        'cdr_customer_number_type' => '${cdr_customer_number_type}',
+        'cdr_status' => '${cdr_status}',
+        'cdr_call_type' => '${cdr_call_type}',
+        'cdr_cno' => '${cdr_cno}',
+        'cdr_start_time' => '${cdr_start_time}',
+        'cdr_bridge_time' => '${cdr_bridge_time}',
+        'cdr_answer_time' => '${cdr_answer_time}',
+        'cdr_end_time' => '${cdr_end_time}',
+        'cdr_request_unique_id' => '${cdr_request_unique_id}',
+        'cdr_record_file_1' => '${cdr_record_file_1}',
+        'cdr_end_reason' => '${cdr_end_reason}',
+        'cdr_agent_number' => '${cdr_agent_number}',
+        'cust_callee_clid' => '${cust_callee_clid}',
+        'cdr_clid' => '${cdr_clid}',
+        'cdr_queue' => '${cdr_queue}',
+        'cdr_customer_province' => '${cdr_customer_province}',
+        'cdr_customer_city' => '${cdr_customer_city}',
+        'cdr_agent_name' => '${cdr_agent_name}'
     ];
 
     public const PARAMS_SEAT_STATUS = [
@@ -155,10 +155,10 @@ class Push extends Api
     ];
 
     public const PARAMS_RECORD_STATUS = [
-        '${cdr_enterprise_id}',
-        '${cdr_unique_id}',
-        '${cdr_record_file_{index}}',
-        '${cdr_record_duration}'
+        'cdr_enterprise_id' => '${cdr_enterprise_id}',
+        'cdr_unique_id' => '${cdr_unique_id}',
+        'cdr_record_file_{index}' => '${cdr_record_file_{index}}',
+        'cdr_record_duration' => '${cdr_record_duration}'
     ];
 
     /**
@@ -251,11 +251,17 @@ class Push extends Api
             $param = array_intersect($params, $param);
         }
 
+        // get paramName
         $paramName = implode(',', array_map(static function ($p) {
             return base64_encode($p);
-        }, $param));
+        }, array_keys($param)));
 
-        return [$paramName, $paramName];
+        // get paramVariable
+        $paramVars = implode(',', array_map(static function ($p) {
+            return base64_encode($p);
+        }, array_values($param)));
+
+        return [$paramName, $paramVars];
     }
 
     /**
